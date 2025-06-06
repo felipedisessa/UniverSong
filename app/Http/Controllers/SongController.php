@@ -10,7 +10,7 @@ class SongController extends Controller
 {
     public function index()
     {
-        $songs = Auth::user()->songs()->latest()->get();
+        $songs = Auth::user()->songs()->latest()->paginate(9);
 
         return view('songs.index', compact('songs'));
     }

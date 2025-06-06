@@ -91,6 +91,9 @@
                     </div>
                 @endforeach
             </div>
+            <div class="mt-8">
+                {{ $songs->links() }}
+            </div>
         @endif
     </div>
 </x-layouts.app>
