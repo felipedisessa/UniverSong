@@ -36,7 +36,13 @@
                             {{ Str::limit($song->original_lyrics, 200) }}
                         </p>
                             <div class="mt-4">
-                                @if (!$song->translation)
+                                <!-- Botão para abrir modal -->
+                                <button data-modal-target="delete-modal-{{ $song->id }}" data-modal-toggle="delete-modal-{{ $song->id }}"
+                                        class="inline-flex items-center mt-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                    Excluir
+                                </button>
+                                @include('songs.modal.destroy')
+                            @if (!$song->translation)
                                     <a href="{{ route('songs.translations.create', $song) }}"
                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
                                         Adicionar Tradução
@@ -56,6 +62,5 @@
                 @endforeach
             </div>
         @endif
-
     </div>
 </x-layouts.app>

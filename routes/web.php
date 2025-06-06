@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
     Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
+    Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('songs.destroy');
     // end region
 
     // translations region

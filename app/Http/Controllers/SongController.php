@@ -34,4 +34,11 @@ class SongController extends Controller
 
         return redirect()->route('songs.create')->with('success', 'Letra publicada com sucesso!');
     }
+
+    public function destroy(Song $song)
+    {
+        $song->delete();
+
+        return redirect()->route('songs.index')->with('success', 'Letra excluída com sucesso!');
+    }
 }
