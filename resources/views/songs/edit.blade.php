@@ -2,7 +2,7 @@
     <div class="max-w-3xl mx-auto px-4 py-10">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Editar Letra</h1>
 
-        <form method="POST" action="{{ route('songs.update', $song) }}">
+        <form method="POST" action="{{ route('songs.update', $song) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -20,6 +20,23 @@
                 <textarea name="original_lyrics" rows="10"
                           class="w-full px-4 py-2 mt-1 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:text-white">{{ old('original_lyrics', $song->original_lyrics) }}</textarea>
                 @error('original_lyrics')
+                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Imagem (opcional)</label>
+
+                @if($song->image)
+                    <div class="mb-3">
+                        <img src="{{ asset('storage/' . $song->image) }}"
+                             alt="Imagem atual"
+                             class="w-full max-w-xs h-auto rounded border dark:border-zinc-600 shadow">
+                    </div>
+                @endif
+
+                <input type="file" name="image"
+                       class="block w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                @error('image')
                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>

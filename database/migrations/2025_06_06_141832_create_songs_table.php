@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('original_lyrics');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
