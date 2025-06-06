@@ -32,7 +32,7 @@ class SongController extends Controller
             'original_lyrics' => $validated['original_lyrics'],
         ]);
 
-        return redirect()->route('songs.create')->with('success', 'Letra publicada com sucesso!');
+        return redirect()->route('songs.index')->with('success', 'Letra publicada com sucesso!');
     }
 
     public function destroy(Song $song)
