@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class SongController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $songs = Auth::user()->songs()->latest()->paginate(9);
+        $query = Auth::user()->songs()->latest();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('title', 'like', '%' . $search . '%');
+        }
+
+        $songs = $query->paginate(9)->withQueryString();
 
         return view('songs.index', compact('songs'));
     }

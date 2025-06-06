@@ -1,5 +1,35 @@
 <x-layouts.app>
     <div class="max-w-6xl mx-auto px-4 py-10">
+        {{-- Barra de pesquisa --}}
+        <form method="GET" action="{{ route('songs.index') }}" class="mb-6">
+            <div class="flex items-center gap-2">
+                <input type="text" name="search" placeholder="Buscar por título..."
+                       value="{{ request('search') }}"
+                       class="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:text-white dark:border-zinc-600 dark:placeholder-gray-400" />
+
+                {{-- Botão Buscar --}}
+                <button type="submit"
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-zinc-600 rounded-lg hover:bg-zinc-700 focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-800 transition"
+                        title="Buscar">
+                    <svg class="w-5 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </button>
+
+                {{-- Botão Limpar --}}
+                @if(request('search'))
+                    <a href="{{ route('songs.index') }}"
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-300 dark:focus:ring-red-800 transition"
+                       title="Limpar pesquisa">
+                        <svg class="w-5 h-6 text-white mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Limpar
+                    </a>
+                @endif
+            </div>
+        </form>
+
         {{-- Toast de sucesso --}}
         @if (session('success'))
             <div id="toast-success"
@@ -49,7 +79,7 @@
                         <hr class="my-4 border-gray-200 dark:border-gray-700">
 
                         <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line text-sm leading-relaxed">
-                            {{ Str::words(strip_tags($song->original_lyrics), 20, '...') }}
+                            {{ Str::words(strip_tags($song->original_lyrics), 15, '...') }}
                         </p>
 
                         <div class="mt-6 flex flex-wrap gap-3">
