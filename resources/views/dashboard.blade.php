@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <div class="bg-[#fdfdfc] dark:bg-[#0a0a0a] py-10">
+    <div class="bg-[#fdfdfc] dark:bg-zinc-800 py-10">
         <div class="max-w-7xl mx-auto px-4">
             <!-- Hero Section -->
             <div class="text-center mb-12">
