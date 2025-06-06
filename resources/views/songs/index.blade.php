@@ -49,7 +49,7 @@
                         <hr class="my-4 border-gray-200 dark:border-gray-700">
 
                         <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line text-sm leading-relaxed">
-                            {{ Str::words(strip_tags($song->original_lyrics), 40, '...') }}
+                            {{ Str::words(strip_tags($song->original_lyrics), 20, '...') }}
                         </p>
 
                         <div class="mt-6 flex flex-wrap gap-3">
