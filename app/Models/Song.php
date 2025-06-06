@@ -12,7 +12,7 @@ class Song extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'original_lyrics'
+        'original_lyrics',
     ];
 
     public function user()

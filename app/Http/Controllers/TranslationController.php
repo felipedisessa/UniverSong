@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
-use App\Models\Translation;
 use Illuminate\Http\Request;
 
 class TranslationController extends Controller
@@ -32,7 +31,7 @@ class TranslationController extends Controller
     {
         $translation = $song->translation;
 
-        if (!$translation) {
+        if (! $translation) {
             return redirect()->route('songs.translations.create', $song)
                 ->with('info', 'Esta música ainda não possui uma tradução.');
         }
@@ -44,7 +43,7 @@ class TranslationController extends Controller
     {
         $translation = $song->translation;
 
-        if (!$translation) {
+        if (! $translation) {
             return back()->with('error', 'Tradução não encontrada.');
         }
 

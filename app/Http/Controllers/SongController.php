@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Song;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SongController extends Controller
@@ -11,12 +11,30 @@ class SongController extends Controller
     public function index()
     {
         $songs = Auth::user()->songs()->latest()->get();
+
         return view('songs.index', compact('songs'));
     }
 
     public function create()
     {
         return view('songs.create');
+    }
+
+    public function edit(Song $song)
+    {
+        return view('songs.edit', compact('song'));
+    }
+
+    public function update(Request $request, Song $song)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'original_lyrics' => 'required|string',
+        ]);
+
+        $song->update($validated);
+
+        return redirect()->route('songs.index')->with('success', 'Letra atualizada com sucesso!');
     }
 
     public function store(Request $request)
