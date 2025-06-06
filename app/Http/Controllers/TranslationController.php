@@ -27,4 +27,33 @@ class TranslationController extends Controller
 
         return redirect()->route('songs.index')->with('success', 'Letra traduzida com sucesso!');
     }
+
+    public function edit(Song $song)
+    {
+        $translation = $song->translation;
+
+        if (!$translation) {
+            return redirect()->route('songs.translations.create', $song)
+                ->with('info', 'Esta música ainda não possui uma tradução.');
+        }
+
+        return view('translations.edit', compact('song', 'translation'));
+    }
+
+    public function update(Request $request, Song $song)
+    {
+        $translation = $song->translation;
+
+        if (!$translation) {
+            return back()->with('error', 'Tradução não encontrada.');
+        }
+
+        $validated = $request->validate([
+            'translated_lyrics' => 'required|string',
+        ]);
+
+        $translation->update($validated);
+
+        return redirect()->route('songs.index')->with('success', 'Tradução atualizada com sucesso!');
+    }
 }

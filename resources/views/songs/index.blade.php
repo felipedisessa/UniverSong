@@ -35,19 +35,23 @@
                         <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
                             {{ Str::limit($song->original_lyrics, 200) }}
                         </p>
-                        @if (!$song->translation)
                             <div class="mt-4">
-                                <a href="{{ route('songs.translations.create', $song) }}"
-                                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                    <svg class="w-4 h-4 mr-2 -ml-1" fill="none" stroke="currentColor" stroke-width="2"
-                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M12 4v16m8-8H4"></path>
-                                    </svg>
-                                    Adicionar Tradução
-                                </a>
+                                @if (!$song->translation)
+                                    <a href="{{ route('songs.translations.create', $song) }}"
+                                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                        Adicionar Tradução
+                                    </a>
+                                @else
+                                    <a href="{{ route('songs.translations.edit', $song) }}"
+                                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:focus:ring-yellow-800">
+                                        <svg class="w-4 h-4 mr-2 -ml-1" fill="none" stroke="currentColor" stroke-width="2"
+                                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3z" />
+                                        </svg>
+                                        Editar Tradução
+                                    </a>
+                                @endif
                             </div>
-                        @endif
                     </div>
                 @endforeach
             </div>

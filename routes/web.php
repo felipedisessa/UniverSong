@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function () {
     // translations region
     Route::get('/songs/{song}/translations/create', [TranslationController::class, 'create'])->name('songs.translations.create');
     Route::post('/songs/{song}/translations', [TranslationController::class, 'store'])->name('songs.translations.store');
+    Route::get('/songs/{song}/translations/edit', [TranslationController::class, 'edit'])->name('songs.translations.edit');
+    Route::put('/songs/{song}/translations', [TranslationController::class, 'update'])->name('songs.translations.update');
     // end region
 });
 
