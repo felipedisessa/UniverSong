@@ -21,5 +21,4 @@ class Song extends Model
     {
         return $this->hasOne(Translation::class);
     }
-
 }

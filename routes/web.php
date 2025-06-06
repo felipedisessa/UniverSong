@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\SongController;
@@ -28,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     // end region
 
+    // translations region
+    Route::get('/songs/{song}/translations/create', [TranslationController::class, 'create'])->name('songs.translations.create');
+    Route::post('/songs/{song}/translations', [TranslationController::class, 'store'])->name('songs.translations.store');
+    // end region
 });
 
 require __DIR__.'/auth.php';
