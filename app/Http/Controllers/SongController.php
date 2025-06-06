@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SongController extends Controller
 {
+    public function index()
+    {
+        $songs = Auth::user()->songs()->latest()->get();
+        return view('songs.index', compact('songs'));
+    }
+
     public function create()
     {
         return view('songs.create');
