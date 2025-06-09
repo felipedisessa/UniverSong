@@ -47,7 +47,10 @@
                             </div>
 
                             <div class="px-6 pb-4">
-                                <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">Ver Letra Completa</a>
+                                <a href="{{ route('songs.show', $song) }}"
+                                   class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+                                    Ver Letra Completa
+                                </a>
                             </div>
                         </div>
 

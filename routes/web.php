@@ -23,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
 
     // songs region
     Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
+    Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show');
     Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     Route::get('/songs/{song}/edit', [SongController::class, 'edit'])->name('songs.edit');

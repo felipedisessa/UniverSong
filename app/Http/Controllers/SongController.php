@@ -22,6 +22,11 @@ class SongController extends Controller
         return view('songs.index', compact('songs'));
     }
 
+    public function show(Song $song)
+    {
+        return view('songs.show', compact('song'));
+    }
+
     public function create()
     {
         return view('songs.create');
