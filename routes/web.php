@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\TranslationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -36,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/songs/{song}/translations', [TranslationController::class, 'store'])->name('songs.translations.store');
     Route::get('/songs/{song}/translations/edit', [TranslationController::class, 'edit'])->name('songs.translations.edit');
     Route::put('/songs/{song}/translations', [TranslationController::class, 'update'])->name('songs.translations.update');
+    // end region
+
+    // users region
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     // end region
 });
 
