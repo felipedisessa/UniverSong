@@ -34,9 +34,8 @@
                 </div>
             </div>
 
-            <!-- Letras publicadas -->
             <div>
-                <h2 class="text-xl font-semibold text-zinc-800 dark:text-white mb-4">Letras Publicadas</h2>
+                <h2 class="text-xl font-semibold text-zinc-800 dark:text-white mb-4">Músicas Publicadas</h2>
 
                 @if($user->songs->isEmpty())
                     <p class="text-zinc-500 dark:text-zinc-400">Nenhuma música publicada ainda.</p>
@@ -49,21 +48,35 @@
                                          alt="Imagem de {{ $song->title }}"
                                          class="w-full h-40 object-cover">
                                 @endif
-                                <div class="p-4">
-                                    <h3 class="text-lg font-bold text-zinc-900 dark:text-white truncate">
-                                        {{ $song->title }}
-                                    </h3>
-                                    <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-3">
-                                        Publicada em {{ $song->created_at->format('d/m/Y') }}
-                                    </p>
-                                    <p class="text-sm text-zinc-700 dark:text-zinc-300 whitespace-pre-line leading-snug mb-4">
-                                        {{ Str::words(strip_tags($song->original_lyrics), 20, '...') }}
-                                    </p>
-                                    <a href="{{ route('songs.show', $song) }}"
-                                       class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                                        Ver Letra Completa
-                                    </a>
-                                </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-bold text-zinc-900 dark:text-white truncate">
+                                            {{ $song->title }}
+                                        </h3>
+                                        <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-3">
+                                            Publicada em {{ $song->created_at->format('d/m/Y') }}
+                                        </p>
+
+                                        @if ($song->audio_path)
+                                            <audio controls class="w-full mb-4">
+                                                <source src="{{ asset('storage/' . $song->audio_path) }}" type="audio/mpeg">
+                                                Seu navegador não suporta o player de áudio.
+                                            </audio>
+                                        @elseif ($song->audio_url)
+                                            <p class="mb-4">
+                                                <a href="{{ $song->audio_url }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                                                    Ouvir no YouTube
+                                                </a>
+                                            </p>
+                                        @else
+                                            <p class="text-sm text-red-500 mb-4">Nenhum áudio disponível.</p>
+                                        @endif
+
+                                        <a href="{{ route('songs.show', $song) }}"
+                                           class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+                                            Detalhes da Música
+                                        </a>
+                                    </div>
+
                             </div>
                         @endforeach
                     </div>

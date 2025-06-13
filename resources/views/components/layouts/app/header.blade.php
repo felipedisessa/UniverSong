@@ -16,7 +16,7 @@
                     {{ __('Página Inicial') }}
                 </flux:navbar.item>
                 <flux:navbar.item icon="musical-note" :href="route('songs.index')" :current="request()->routeIs('songs.index')">
-                    {{ __('Minhas Letras') }}
+                    {{ __('Minhas Músicas') }}
                 </flux:navbar.item>
             </flux:navbar>
 
@@ -105,7 +105,7 @@
                         {{ __('Página Inicial') }}
                     </flux:navlist.item>
                     <flux:navbar.item icon="musical-note" :href="route('songs.index')" :current="request()->routeIs('songs.index')">
-                        {{ __('Minhas Letras') }}
+                        {{ __('Minhas Músicas') }}
                     </flux:navbar.item>
                 </flux:navlist.group>
             </flux:navlist>

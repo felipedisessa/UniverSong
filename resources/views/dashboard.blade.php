@@ -3,9 +3,9 @@
         <div class="max-w-7xl mx-auto px-4">
             <!-- Hero Section -->
             <div class="text-center mb-12">
-                <h1 class="text-5xl font-extrabold text-zinc-900 dark:text-white mb-3">Descubra Letras de Músicas</h1>
+                <h1 class="text-5xl font-extrabold text-zinc-900 dark:text-white mb-3">Descubra Novas Músicas</h1>
                 <p class="text-zinc-600 dark:text-zinc-400 text-lg max-w-2xl mx-auto">
-                    Explore as mais recentes letras publicadas por artistas da comunidade. Compartilhe suas próprias criações ou busque inspiração.
+                    Explore as músicas mais recentes publicadas por artistas da comunidade. Encontre sons únicos ou compartilhe sua própria arte.
                 </p>
             </div>
 
@@ -41,19 +41,30 @@
                                 <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
                                     por <span class="font-medium">{{ $song->user->name ?? 'Anônimo' }}</span> • {{ $song->created_at->format('d/m/Y') }}
                                 </p>
-                                <p class="text-sm text-zinc-700 dark:text-zinc-300 whitespace-pre-line leading-snug">
-                                    {{ Str::words(strip_tags($song->original_lyrics), 30, '...') }}
-                                </p>
+
+                                @if ($song->audio_path)
+                                    <audio controls class="w-full mt-2">
+                                        <source src="{{ asset('storage/' . $song->audio_path) }}" type="audio/mpeg">
+                                        Seu navegador não suporta o elemento de áudio.
+                                    </audio>
+                                @elseif ($song->audio_url)
+                                    <p class="mt-2">
+                                        <a href="{{ $song->audio_url }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                                            Ouvir no YouTube
+                                        </a>
+                                    </p>
+                                @else
+                                    <p class="text-sm text-red-500 mt-2">Nenhum áudio disponível.</p>
+                                @endif
                             </div>
 
                             <div class="px-6 pb-4">
                                 <a href="{{ route('songs.show', $song) }}"
                                    class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                                    Ver Letra Completa
+                                    Detalhes da Música
                                 </a>
                             </div>
                         </div>
-
                     @endforeach
                 </div>
 

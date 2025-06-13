@@ -1,7 +1,7 @@
 <x-layouts.app>
     <div class="max-w-2xl mx-auto px-4 py-8">
 
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Publicar Nova Letra</h1>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Publicar Nova Música</h1>
 
         {{-- Alerta de sucesso --}}
         @if(session('success'))
@@ -25,15 +25,28 @@
                 @enderror
             </div>
 
+            {{-- Campo de arquivo de áudio --}}
             <div>
-                <label for="original_lyrics" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Letra Original</label>
-                <textarea name="original_lyrics" id="original_lyrics" rows="8"
-                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-gray-400 dark:text-white"
-                          required>{{ old('original_lyrics') }}</textarea>
-                @error('original_lyrics')
+                <label for="audio_file" class="block text-sm font-medium text-gray-900 dark:text-white">Enviar Arquivo de Áudio</label>
+                <input type="file" name="audio_file" id="audio_file"
+                       accept="audio/mpeg,audio/mp3,audio/wav"
+                       class="block w-full text-sm border border-gray-300 rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
+                @error('audio_file')
                 <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>
+
+            {{-- Campo de link da música --}}
+            <div>
+                <label for="audio_url" class="block text-sm font-medium text-gray-900 dark:text-white">Ou informe o link da música (ex: YouTube)</label>
+                <input type="url" name="audio_url" id="audio_url" value="{{ old('audio_url', $song->audio_url ?? '') }}"
+                       placeholder="https://youtube.com/..."
+                       class="block w-full text-sm border border-gray-300 rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
+                @error('audio_url')
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div>
                 <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagem da Música (opcional)</label>
                 <input type="file" name="image" id="image"

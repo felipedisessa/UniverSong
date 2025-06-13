@@ -15,7 +15,7 @@
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Pagina Inicial') }}</flux:navlist.item>
                     <flux:navlist.item icon="musical-note" :href="route('songs.index')" :current="request()->routeIs('songs.index')">
-                        {{ __('Minhas Letras') }}
+                        {{ __('Minhas Músicas') }}
                     </flux:navlist.item>
 
                 </flux:navlist.group>

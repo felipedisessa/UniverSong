@@ -7,7 +7,6 @@
                        value="{{ request('search') }}"
                        class="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:text-white dark:border-zinc-600 dark:placeholder-gray-400" />
 
-                {{-- Botão Buscar --}}
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-zinc-600 rounded-lg hover:bg-zinc-700 focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-800 transition"
                         title="Buscar">
@@ -16,7 +15,6 @@
                     </svg>
                 </button>
 
-                {{-- Botão Limpar --}}
                 @if(request('search'))
                     <a href="{{ route('songs.index') }}"
                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-300 dark:focus:ring-red-800 transition"
@@ -52,20 +50,20 @@
         @endif
 
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-            <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white">Minhas Letras</h1>
+            <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white">Minhas Músicas</h1>
             <a href="{{ route('songs.create') }}"
                class="inline-flex items-center gap-2 px-4 py-2.5 text-base font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                 </svg>
-                Publicar Nova Letra
+                Publicar Nova Música
             </a>
         </div>
 
         {{-- Lista ou mensagem --}}
         @if ($songs->isEmpty())
             <div class="p-6 text-center text-gray-600 bg-white border border-gray-200 rounded-lg shadow dark:bg-zinc-800 dark:border-zinc-700 dark:text-gray-300">
-                Você ainda não publicou nenhuma letra.
+                Você ainda não publicou nenhuma música.
             </div>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -78,41 +76,36 @@
 
                         <hr class="my-4 border-gray-200 dark:border-gray-700">
 
-                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line text-sm leading-relaxed">
-                            {{ Str::words(strip_tags($song->original_lyrics), 15, '...') }}
-                        </p>
+                        @if ($song->audio_path)
+                            <audio controls class="w-full mb-4">
+                                <source src="{{ asset('storage/' . $song->audio_path) }}" type="audio/mpeg">
+                                Seu navegador não suporta o player de áudio.
+                            </audio>
+                        @elseif ($song->audio_url)
+                            <p class="mb-4">
+                                <a href="{{ $song->audio_url }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                                    Ouvir no YouTube
+                                </a>
+                            </p>
+                        @else
+                            <p class="text-sm text-red-500 mb-4">Nenhum áudio disponível.</p>
+                        @endif
 
-                        <div class="mt-6 flex flex-wrap gap-3">
-                            {{-- Traduções --}}
-{{--                            @if (!$song->translation)--}}
-{{--                                <a href="{{ route('songs.translations.create', $song) }}"--}}
-{{--                                   class="inline-flex items-center px-2 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-600 dark:focus:ring-blue-800">--}}
-{{--                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">--}}
-{{--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>--}}
-{{--                                    </svg>--}}
-{{--                                    Criar Tradução--}}
-{{--                                </a>--}}
-{{--                            @else--}}
-{{--                                <a href="{{ route('songs.translations.edit', $song) }}"--}}
-{{--                                   class="inline-flex items-center px-2 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-600 dark:focus:ring-blue-800">--}}
-{{--                                    <svg class="w-5 h-5 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">--}}
-{{--                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>--}}
-{{--                                    </svg>--}}
-{{--                                    Editar Tradução--}}
-{{--                                </a>--}}
-{{--                            @endif--}}
+                        <div class="mt-4 flex flex-wrap gap-3">
                             <a href="{{ route('songs.edit', $song) }}"
                                class="flex items-center px-2 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                               <svg class="w-5 h-5 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                               </svg>
-                                Editar Letra
+                                <svg class="w-5 h-5 mr-2 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                </svg>
+                                Editar
                             </a>
-                            {{-- Botão de exclusão --}}
+
                             <button data-modal-target="delete-modal-{{ $song->id }}" data-modal-toggle="delete-modal-{{ $song->id }}"
                                     class="flex items-center px-2 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
-                                <svg class="w-5 h-5 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                <svg class="w-5 h-5 mr-2 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                                 </svg>
                                 Excluir
                             </button>
@@ -121,6 +114,7 @@
                     </div>
                 @endforeach
             </div>
+
             <div class="mt-8">
                 {{ $songs->links() }}
             </div>

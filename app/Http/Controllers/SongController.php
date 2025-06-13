@@ -41,38 +41,63 @@ class SongController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'original_lyrics' => 'required|string',
+            'audio_file' => 'nullable|file|mimetypes:audio/mpeg,audio/mp3,wav|max:20480',
+            'audio_url' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('songs', 'public');
+        if (!$request->hasFile('audio_file') && !$request->filled('audio_url') && !$song->audio_path && !$song->audio_url) {
+            return back()->withErrors(['audio_file' => 'Você precisa manter ou enviar um arquivo de áudio ou link.']);
         }
 
-        $song->update($validated);
+        $updateData = [
+            'title' => $validated['title'],
+        ];
 
-        return redirect()->route('songs.index')->with('success', 'Letra atualizada com sucesso!');
+        if ($request->hasFile('image')) {
+            $updateData['image'] = $request->file('image')->store('songs', 'public');
+        }
+
+        if ($request->hasFile('audio_file')) {
+            $updateData['audio_path'] = $request->file('audio_file')->store('songs/audio', 'public');
+            $updateData['audio_url'] = null;
+        } elseif ($request->filled('audio_url')) {
+            $updateData['audio_url'] = $validated['audio_url'];
+            $updateData['audio_path'] = null;
+        }
+
+        $song->update($updateData);
+
+        return redirect()->route('songs.index')->with('success', 'Música atualizada com sucesso!');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'original_lyrics' => 'required|string',
+            'audio_file' => 'nullable|file|mimetypes:audio/mpeg,audio/mp3,wav|max:20480',
+            'audio_url' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $path = null;
-
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('songs', 'public');
+        if (!$request->hasFile('audio_file') && !$request->filled('audio_url')) {
+            return back()->withErrors(['audio_file' => 'Envie um arquivo de áudio ou forneça um link.']);
         }
+
+        $audioPath = $request->hasFile('audio_file')
+            ? $request->file('audio_file')->store('songs/audio', 'public')
+            : null;
+
+        $imagePath = $request->hasFile('image')
+            ? $request->file('image')->store('songs', 'public')
+            : null;
 
         Song::create([
             'user_id' => Auth::id(),
             'title' => $validated['title'],
-            'original_lyrics' => $validated['original_lyrics'],
-            'image' => $path,
+            'audio_path' => $audioPath,
+            'audio_url' => $validated['audio_url'],
+            'image' => $imagePath,
         ]);
 
         return redirect()->route('songs.index')->with('success', 'Letra publicada com sucesso!');

@@ -12,9 +12,9 @@ class Song extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'original_lyrics',
-        'image',
-    ];
+        'audio_path',
+        'audio_url',
+        'image'];
 
     public function user()
     {
