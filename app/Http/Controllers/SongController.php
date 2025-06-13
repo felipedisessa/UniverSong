@@ -65,7 +65,7 @@ class SongController extends Controller
             'mood' => $validated['mood'] ?? null,
             'language' => $validated['language'] ?? null,
             'tags' => $validated['tags'] ?? null,
-            'is_public' => $request->boolean('is_public', true),
+            'is_public' => $request->has('is_public'),
         ];
 
         if ($request->hasFile('image')) {
@@ -126,7 +126,7 @@ class SongController extends Controller
             'mood' => $validated['mood'] ?? null,
             'language' => $validated['language'] ?? null,
             'tags' => $validated['tags'] ?? null,
-            'is_public' => $request->boolean('is_public', true),
+            'is_public' => $request->has('is_public'),
         ]);
 
         return redirect()->route('songs.index')->with('success', 'Letra publicada com sucesso!');

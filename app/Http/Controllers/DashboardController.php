@@ -9,7 +9,9 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Song::with('user')->latest();
+        $query = Song::with('user')
+            ->where('is_public', true)
+            ->latest();
 
         if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%');
