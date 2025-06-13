@@ -45,6 +45,44 @@
                         @endif
                     </div>
 
+                    <!-- Detalhes da Música -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm text-zinc-800 dark:text-zinc-200 mb-6">
+                        @if($song->genre)
+                            <div><strong>Gênero:</strong> {{ $song->genre }}</div>
+                        @endif
+
+                        @if($song->bpm)
+                            <div><strong>BPM:</strong> {{ $song->bpm }}</div>
+                        @endif
+
+                        @if($song->key)
+                            <div><strong>Tonalidade:</strong> {{ $song->key }}</div>
+                        @endif
+
+                        @if($song->mood)
+                            <div><strong>Mood:</strong> {{ $song->mood }}</div>
+                        @endif
+
+                        @if($song->language)
+                            <div><strong>Idioma:</strong> {{ $song->language }}</div>
+                        @endif
+
+                        @if($song->tags)
+                            <div><strong>Tags:</strong>
+                                @foreach(explode(',', $song->tags) as $tag)
+                                    <span class="inline-block bg-zinc-100 dark:bg-zinc-700 text-xs px-2 py-0.5 rounded mr-1">{{ trim($tag) }}</span>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <div>
+                            <strong>Visibilidade:</strong>
+                            <span class="font-semibold {{ $song->is_public ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                {{ $song->is_public ? 'Pública' : 'Privada' }}
+                            </span>
+                        </div>
+                    </div>
+
                     <!-- Sobre o artista -->
                     @if($song->user)
                         <div class="mt-8 border-t pt-6 dark:border-zinc-700">

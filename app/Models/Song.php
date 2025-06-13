@@ -14,7 +14,15 @@ class Song extends Model
         'title',
         'audio_path',
         'audio_url',
-        'image'];
+        'image',
+        'genre',
+        'bpm',
+        'key',
+        'mood',
+        'language',
+        'tags',
+        'is_public',
+    ];
 
     public function user()
     {

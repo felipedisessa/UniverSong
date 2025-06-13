@@ -18,6 +18,15 @@ return new class extends Migration
             $table->string('audio_path')->nullable();
             $table->string('audio_url')->nullable();
             $table->string('image')->nullable();
+
+            $table->string('genre')->nullable();             // Estilo musical
+            $table->unsignedSmallInteger('bpm')->nullable(); // Batidas por minuto
+            $table->string('key')->nullable();               // Tonalidade
+            $table->string('mood')->nullable();              // Vibe / Emoção
+            $table->string('language', 10)->nullable();      // Idioma
+            $table->text('tags')->nullable();                // Tags livres
+            $table->boolean('is_public')->default(true);     // Visibilidade
+
             $table->timestamps();
             $table->softDeletes();
         });

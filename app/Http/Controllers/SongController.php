@@ -44,6 +44,13 @@ class SongController extends Controller
             'audio_file' => 'nullable|file|mimetypes:audio/mpeg,audio/mp3,wav|max:20480',
             'audio_url' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'genre' => 'nullable|string|max:100',
+            'bpm' => 'nullable|integer|min:40|max:300',
+            'key' => 'nullable|string|max:10',
+            'mood' => 'nullable|string|max:100',
+            'language' => 'nullable|string|max:10',
+            'tags' => 'nullable|string|max:255',
+            'is_public' => 'sometimes|boolean',
         ]);
 
         if (!$request->hasFile('audio_file') && !$request->filled('audio_url') && !$song->audio_path && !$song->audio_url) {
@@ -52,6 +59,13 @@ class SongController extends Controller
 
         $updateData = [
             'title' => $validated['title'],
+            'genre' => $validated['genre'] ?? null,
+            'bpm' => $validated['bpm'] ?? null,
+            'key' => $validated['key'] ?? null,
+            'mood' => $validated['mood'] ?? null,
+            'language' => $validated['language'] ?? null,
+            'tags' => $validated['tags'] ?? null,
+            'is_public' => $request->boolean('is_public', true),
         ];
 
         if ($request->hasFile('image')) {
@@ -71,6 +85,7 @@ class SongController extends Controller
         return redirect()->route('songs.index')->with('success', 'Música atualizada com sucesso!');
     }
 
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -78,6 +93,13 @@ class SongController extends Controller
             'audio_file' => 'nullable|file|mimetypes:audio/mpeg,audio/mp3,wav|max:20480',
             'audio_url' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'genre' => 'nullable|string|max:100',
+            'bpm' => 'nullable|integer|min:40|max:300',
+            'key' => 'nullable|string|max:10',
+            'mood' => 'nullable|string|max:100',
+            'language' => 'nullable|string|max:10',
+            'tags' => 'nullable|string|max:255',
+            'is_public' => 'sometimes|boolean',
         ]);
 
         if (!$request->hasFile('audio_file') && !$request->filled('audio_url')) {
@@ -98,6 +120,13 @@ class SongController extends Controller
             'audio_path' => $audioPath,
             'audio_url' => $validated['audio_url'],
             'image' => $imagePath,
+            'genre' => $validated['genre'] ?? null,
+            'bpm' => $validated['bpm'] ?? null,
+            'key' => $validated['key'] ?? null,
+            'mood' => $validated['mood'] ?? null,
+            'language' => $validated['language'] ?? null,
+            'tags' => $validated['tags'] ?? null,
+            'is_public' => $request->boolean('is_public', true),
         ]);
 
         return redirect()->route('songs.index')->with('success', 'Letra publicada com sucesso!');
