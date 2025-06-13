@@ -1,3 +1,4 @@
+@php use App\Enum\Genre; @endphp
 <x-layouts.app>
     <div class="max-w-2xl mx-auto px-4 py-8">
 
@@ -5,7 +6,9 @@
 
         {{-- Alerta de sucesso --}}
         @if(session('success'))
-            <div class="mb-4 flex items-center p-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-green-800 dark:text-green-100 dark:border-green-600" role="alert">
+            <div
+                class="mb-4 flex items-center p-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-green-800 dark:text-green-100 dark:border-green-600"
+                role="alert">
                 <span class="sr-only">Success</span>
                 <div>{{ session('success') }}</div>
             </div>
@@ -26,7 +29,8 @@
 
             {{-- Arquivo de áudio --}}
             <div>
-                <label for="audio_file" class="block text-sm font-medium text-gray-900 dark:text-white">Arquivo de Áudio</label>
+                <label for="audio_file" class="block text-sm font-medium text-gray-900 dark:text-white">Arquivo de
+                    Áudio</label>
                 <input type="file" name="audio_file" id="audio_file"
                        accept="audio/mpeg,audio/mp3,audio/wav"
                        class="block w-full text-sm border border-gray-300 rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
@@ -35,7 +39,8 @@
 
             {{-- Link alternativo --}}
             <div>
-                <label for="audio_url" class="block text-sm font-medium text-gray-900 dark:text-white">Ou Link (ex: YouTube)</label>
+                <label for="audio_url" class="block text-sm font-medium text-gray-900 dark:text-white">Ou Link (ex:
+                    YouTube)</label>
                 <input type="url" name="audio_url" id="audio_url" value="{{ old('audio_url') }}"
                        placeholder="https://youtube.com/..."
                        class="block w-full text-sm border border-gray-300 rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
@@ -44,18 +49,27 @@
 
             {{-- Imagem --}}
             <div>
-                <label for="image" class="block text-sm font-medium text-gray-900 dark:text-white">Imagem (opcional)</label>
+                <label for="image" class="block text-sm font-medium text-gray-900 dark:text-white">Imagem
+                    (opcional)</label>
                 <input type="file" name="image" id="image" accept="image/jpeg,image/png"
                        class="block w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-white dark:bg-zinc-700 dark:border-zinc-600">
                 @error('image') <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p> @enderror
             </div>
 
-            {{-- Estilo musical --}}
+            {{-- Gênero --}}
             <div>
-                <label for="genre" class="block text-sm font-medium text-gray-900 dark:text-white">Gênero / Estilo</label>
-                <input type="text" name="genre" id="genre" value="{{ old('genre') }}"
-                       placeholder="Ex: Trap, Rap, Pop"
-                       class="w-full p-2.5 text-sm border rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
+                <label for="genre" class="block text-sm font-medium text-gray-900 dark:text-white">Gênero /
+                    Estilo</label>
+                <select name="genre" id="genre"
+                        class="w-full mt-1 rounded-md border-gray-300 shadow-sm dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
+                    <option value="">Selecione um gênero</option>
+                    @foreach(Genre::cases() as $genre)
+                        <option
+                            value="{{ $genre->value }}" {{ old('genre', $song->genre ?? '') === $genre->value ? 'selected' : '' }}>
+                            {{ $genre->value }}
+                        </option>
+                    @endforeach
+                </select>
                 @error('genre') <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p> @enderror
             </div>
 
@@ -106,7 +120,8 @@
 
             {{-- Tags --}}
             <div>
-                <label for="tags" class="block text-sm font-medium text-gray-900 dark:text-white">Tags (separadas por vírgula)</label>
+                <label for="tags" class="block text-sm font-medium text-gray-900 dark:text-white">Tags (separadas por
+                    vírgula)</label>
                 <input type="text" name="tags" id="tags" value="{{ old('tags') }}"
                        placeholder="ex: love, verão, vibes"
                        class="w-full p-2.5 text-sm border rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">

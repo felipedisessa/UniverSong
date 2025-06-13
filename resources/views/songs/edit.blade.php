@@ -1,3 +1,4 @@
+@php use App\Enum\Genre; @endphp
 <x-layouts.app>
     <div class="max-w-3xl mx-auto px-4 py-10">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Editar Música</h1>
@@ -26,7 +27,8 @@
             @elseif($song->audio_url)
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link Atual</label>
-                    <a href="{{ $song->audio_url }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                    <a href="{{ $song->audio_url }}" target="_blank"
+                       class="text-blue-600 dark:text-blue-400 hover:underline text-sm">
                         {{ $song->audio_url }}
                     </a>
                 </div>
@@ -34,7 +36,8 @@
 
             <!-- Novo arquivo de áudio -->
             <div class="mb-4">
-                <label for="audio_file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Enviar Novo Arquivo de Áudio (opcional)</label>
+                <label for="audio_file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Enviar Novo
+                    Arquivo de Áudio (opcional)</label>
                 <input type="file" name="audio_file" id="audio_file"
                        accept="audio/mpeg,audio/mp3,audio/wav"
                        class="block w-full text-sm border border-gray-300 rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
@@ -43,7 +46,8 @@
 
             <!-- Novo link -->
             <div class="mb-4">
-                <label for="audio_url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ou informe um novo link (YouTube, etc.)</label>
+                <label for="audio_url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ou informe um
+                    novo link (YouTube, etc.)</label>
                 <input type="url" name="audio_url" id="audio_url" value="{{ old('audio_url', $song->audio_url) }}"
                        placeholder="https://youtube.com/..."
                        class="block w-full text-sm border border-gray-300 rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
@@ -67,10 +71,18 @@
 
             <!-- Gênero -->
             <div class="mb-4">
-                <label for="genre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gênero / Estilo</label>
-                <input type="text" name="genre" id="genre" value="{{ old('genre', $song->genre) }}"
-                       placeholder="Ex: Trap, Rap, Pop"
-                       class="w-full px-4 py-2 mt-1 border rounded-md dark:bg-zinc-700 dark:text-white">
+                <label for="genre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gênero /
+                    Estilo</label>
+                <select name="genre" id="genre"
+                        class="w-full mt-1 rounded-md border-gray-300 shadow-sm dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
+                    <option value="">Selecione um gênero</option>
+                    @foreach(Genre::cases() as $genre)
+                        <option
+                            value="{{ $genre->value }}" {{ old('genre', $song->genre) === $genre->value ? 'selected' : '' }}>
+                            {{ $genre->value }}
+                        </option>
+                    @endforeach
+                </select>
                 @error('genre') <p class="text-sm text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
@@ -106,14 +118,20 @@
                 <select name="language" id="language"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-zinc-700 dark:text-white dark:border-zinc-600">
                     <option value="">Selecione um idioma</option>
-                    <option value="pt" {{ old('language', $song->language) === 'pt' ? 'selected' : '' }}>Português</option>
+                    <option value="pt" {{ old('language', $song->language) === 'pt' ? 'selected' : '' }}>Português
+                    </option>
                     <option value="en" {{ old('language', $song->language) === 'en' ? 'selected' : '' }}>Inglês</option>
-                    <option value="es" {{ old('language', $song->language) === 'es' ? 'selected' : '' }}>Espanhol</option>
-                    <option value="fr" {{ old('language', $song->language) === 'fr' ? 'selected' : '' }}>Francês</option>
+                    <option value="es" {{ old('language', $song->language) === 'es' ? 'selected' : '' }}>Espanhol
+                    </option>
+                    <option value="fr" {{ old('language', $song->language) === 'fr' ? 'selected' : '' }}>Francês
+                    </option>
                     <option value="de" {{ old('language', $song->language) === 'de' ? 'selected' : '' }}>Alemão</option>
-                    <option value="it" {{ old('language', $song->language) === 'it' ? 'selected' : '' }}>Italiano</option>
-                    <option value="ja" {{ old('language', $song->language) === 'ja' ? 'selected' : '' }}>Japonês</option>
-                    <option value="ko" {{ old('language', $song->language) === 'ko' ? 'selected' : '' }}>Coreano</option>
+                    <option value="it" {{ old('language', $song->language) === 'it' ? 'selected' : '' }}>Italiano
+                    </option>
+                    <option value="ja" {{ old('language', $song->language) === 'ja' ? 'selected' : '' }}>Japonês
+                    </option>
+                    <option value="ko" {{ old('language', $song->language) === 'ko' ? 'selected' : '' }}>Coreano
+                    </option>
                     <option value="zh" {{ old('language', $song->language) === 'zh' ? 'selected' : '' }}>Chinês</option>
                 </select>
                 @error('language') <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p> @enderror
@@ -121,7 +139,8 @@
 
             <!-- Tags -->
             <div class="mb-4">
-                <label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tags (separadas por vírgula)</label>
+                <label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tags (separadas por
+                    vírgula)</label>
                 <input type="text" name="tags" id="tags" value="{{ old('tags', $song->tags) }}"
                        placeholder="ex: love, verão, vibes"
                        class="w-full px-4 py-2 mt-1 border rounded-md dark:bg-zinc-700 dark:text-white">
@@ -130,8 +149,9 @@
 
             <!-- Visibilidade -->
             <div class="flex items-center mb-6 gap-2">
-                <input type="checkbox" name="is_public" id="is_public" value="1" {{ old('is_public', $song->is_public) ? 'checked' : '' }}
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-zinc-700 dark:border-gray-600">
+                <input type="checkbox" name="is_public" id="is_public" value="1"
+                       {{ old('is_public', $song->is_public) ? 'checked' : '' }}
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-zinc-700 dark:border-gray-600">
                 <label for="is_public" class="text-sm text-gray-900 dark:text-white">Tornar público</label>
             </div>
 
