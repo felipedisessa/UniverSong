@@ -16,7 +16,7 @@
                 <div class="md:col-span-2">
                     <label for="search" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Buscar por título</label>
                     <input type="text" name="search" id="search" value="{{ request('search') }}"
-                           placeholder="Ex: Amor, Luz, Paz..."
+                           placeholder="Digite o título da música..."
                            class="w-full px-4 py-2 border border-zinc-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:text-white dark:border-zinc-600" />
                 </div>
 
