@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->boolean('is_producer')->default(false);
+            $table->string('role')->nullable();
+            $table->text('instruments')->nullable();
+            $table->text('bio')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

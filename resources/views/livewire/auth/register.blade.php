@@ -11,6 +11,10 @@ use Livewire\Volt\Component;
 new #[Layout('components.layouts.auth')] class extends Component {
     public string $name = '';
     public string $email = '';
+    public string $role = '';
+    public string $instruments = '';
+    public string $bio = '';
+    public bool $is_producer = false;
     public string $password = '';
     public string $password_confirmation = '';
 
@@ -23,6 +27,10 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'role' => ['nullable', 'string', 'max:255'],
+            'instruments' => ['nullable', 'string', 'max:1000'],
+            'bio' => ['nullable', 'string', 'max:2000'],
+            'is_producer' => ['boolean'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -62,6 +70,38 @@ new #[Layout('components.layouts.auth')] class extends Component {
             autocomplete="email"
             placeholder="email@example.com"
         />
+
+        <!-- Papel do usuário -->
+        <flux:input
+            wire:model="role"
+            :label="__('Qual é o seu papel? (músico, produtor, etc.)')"
+            type="text"
+            placeholder="Músico, produtor, beatmaker..."
+        />
+
+        <!-- Instrumentos -->
+        <flux:input
+            wire:model="instruments"
+            :label="__('Instrumentos que você toca')"
+            type="text"
+            placeholder="Guitarra, teclado, bateria..."
+        />
+
+        <!-- Descrição pessoal -->
+        <flux:textarea
+            wire:model="bio"
+            :label="__('Sobre você')"
+            placeholder="Fale um pouco sobre sua carreira ou estilo..."
+        />
+
+        <!-- É produtor? -->
+        <div class="flex items-center gap-2 mt-2">
+            <input type="checkbox" wire:model="is_producer" id="is_producer"
+                   class="rounded text-blue-600 dark:bg-zinc-800 dark:border-zinc-700">
+            <label for="is_producer" class="text-sm text-zinc-700 dark:text-zinc-300">
+                Sou produtor musical
+            </label>
+        </div>
 
         <!-- Password -->
         <flux:input
